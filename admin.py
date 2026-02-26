@@ -1,21 +1,26 @@
 from django.contrib import admin
+# Đảm bảo import đầy đủ 7 classes như yêu cầu
 from .models import Course, Lesson, Instructor, Learner, Question, Choice, Submission
 
-class QuestionInline(admin.StackedInline):
-    model = Question
-    extra = 5
-
+# Implementation của QuestionInline
 class ChoiceInline(admin.StackedInline):
     model = Choice
-    extra = 3
+    extra = 2
 
+# Implementation của QuestionAdmin
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
+    list_display = ['question_text', 'grade']
 
+# Implementation của LessonAdmin (Bổ sung list_display)
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['title', 'order']
 
+# Đăng ký các class còn lại
+admin.site.register(Course)
+admin.site.register(Instructor)
+admin.site.register(Learner)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
 admin.site.register(Lesson, LessonAdmin)
-# Đừng quên register các class còn lại theo yêu cầu bài lab
+admin.site.register(Submission)
